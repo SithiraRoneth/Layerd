@@ -29,12 +29,12 @@ public class CustomerDAOImpl {
         return getAllCustomer;
     }
 
-    public boolean customerSave(String id, String name, String address) throws SQLException, ClassNotFoundException {
+    public boolean customerSave(CustomerDTO dto) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getDbConnection().getConnection();
         PreparedStatement pstm = connection.prepareStatement("INSERT INTO customer (id,name, address) VALUES (?,?,?)");
-        pstm.setString(1, id);
-        pstm.setString(2, name);
-        pstm.setString(3, address);
+        pstm.setString(1,dto.getId());
+        pstm.setString(2,dto.getName());
+        pstm.setString(3,dto.getAddress());
 
         boolean isSaved = pstm.executeUpdate()>0;
         return isSaved;

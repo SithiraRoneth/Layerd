@@ -147,8 +147,8 @@ public class ManageCustomersFormController {
                 if (existCustomer(id)) {
                     new Alert(Alert.AlertType.ERROR, id + " already exists").show();
                 }
-               // CustomerDAOImpl customerDAO = new CustomerDAOImpl();
-                boolean isSaved  = customerDAO.customerSave(id,name,address);
+                var dto = new CustomerDTO(id,name,address);
+                boolean isSaved  = customerDAO.customerSave(dto);
                 if (isSaved){
                     tblCustomers.getItems().add(new CustomerTM(id, name, address));
                 }
