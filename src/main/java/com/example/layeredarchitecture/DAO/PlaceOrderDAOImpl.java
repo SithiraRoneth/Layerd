@@ -16,10 +16,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlaceOrderDAOImpl {
+public class PlaceOrderDAOImpl implements PlaceOrderDAO{
     ItemDAO itemDAO = new ItemDAOImpl();
     CustomerDAO customerDAO = new CustomerDAOImpl();
-
+    @Override
     public ItemDTO findItem(String code) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getDbConnection().getConnection();
         PreparedStatement pstm = connection.prepareStatement("SELECT * FROM Item WHERE code=?");
@@ -29,12 +29,14 @@ public class PlaceOrderDAOImpl {
 
         return null;
     }
+    @Override
     public boolean isExist(String id) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getDbConnection().getConnection();
         PreparedStatement pstm = connection.prepareStatement("SELECT id FROM Customer WHERE id=?");
         pstm.setString(1, id);
         return pstm.executeQuery().next();
     }
+    @Override
     public String nextId() throws SQLException, ClassNotFoundException {
 
         Connection connection = DBConnection.getDbConnection().getConnection();
@@ -43,9 +45,11 @@ public class PlaceOrderDAOImpl {
 
         return rst.next() ? String.format("OID-%03d", (Integer.parseInt(rst.getString("oid").replace("OID-", "")) + 1)) : "OID-001";
     }
+    @Override
     public ArrayList<CustomerDTO> loadAllCustomer(){
         return null;
     }
+    @Override
     public boolean saveOrderDetails(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO>orderDetails){
         Connection connection = null;
         try {
