@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlaceOrderDAOImpl {
+    ItemDAO itemDAO = new ItemDAOImpl();
+    CustomerDAO customerDAO = new CustomerDAOImpl();
 
     public ItemDTO findItem(String code) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getDbConnection().getConnection();
@@ -50,7 +52,7 @@ public class PlaceOrderDAOImpl {
             connection = DBConnection.getDbConnection().getConnection();
             PreparedStatement stm = connection.prepareStatement("SELECT oid FROM `Orders` WHERE oid=?");
             stm.setString(1, orderId);
-            /*if order id already exist*/
+            //*if order id already exist*//*
             if (stm.executeQuery().next()) {
 
             }
