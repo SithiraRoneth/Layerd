@@ -309,6 +309,4 @@ public class PlaceOrderFormController {
         return placeOrderDAO.saveOrderDetails(orderId,orderDate,customerId,orderDetails);
     }
 
-
-
 }
