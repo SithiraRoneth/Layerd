@@ -14,7 +14,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.List;
 
-public class PlaceOrderDAOImpl implements PlaceOrderDAO {
+public class OrderDAOImpl implements OrderDAO {
     ItemDAO itemDAO = new ItemDAOImpl();
     CustomerDAO customerDAO = new CustomerDAOImpl();
 

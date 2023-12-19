@@ -49,7 +49,7 @@ public class PlaceOrderFormController {
     public Label lblDate;
     public Label lblTotal;
     private String orderId;
-    PlaceOrderDAOImpl placeOrderDAO = new PlaceOrderDAOImpl();
+    OrderDAOImpl placeOrderDAO = new OrderDAOImpl();
     CustomerDAO customerDAO = new CustomerDAOImpl();
 
     ItemDAO itemDAO = new ItemDAOImpl();
