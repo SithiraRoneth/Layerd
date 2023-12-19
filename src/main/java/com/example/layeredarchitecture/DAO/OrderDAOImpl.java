@@ -15,10 +15,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class OrderDAOImpl implements OrderDAO {
-    ItemDAO itemDAO = new ItemDAOImpl();
-    CustomerDAO customerDAO = new CustomerDAOImpl();
-
-    OrderDetailDAO orderDetailDAO = new OrderDetailDAOImpl();
 
     @Override
     public ItemDTO findItem(String code) throws SQLException, ClassNotFoundException {

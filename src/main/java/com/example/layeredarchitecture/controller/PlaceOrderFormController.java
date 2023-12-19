@@ -49,7 +49,7 @@ public class PlaceOrderFormController {
     public Label lblDate;
     public Label lblTotal;
     private String orderId;
-    OrderDAOImpl placeOrderDAO = new OrderDAOImpl();
+    OrderDAOImpl OrderDAO = new OrderDAOImpl();
     CustomerDAO customerDAO = new CustomerDAOImpl();
 
     ItemDAO itemDAO = new ItemDAOImpl();
@@ -183,7 +183,7 @@ public class PlaceOrderFormController {
 
     public String generateNewOrderId() {
         try {
-            return placeOrderDAO.nextId();
+            return OrderDAO.nextId();
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Failed to generate a new order id").show();
         } catch (ClassNotFoundException e) {
@@ -306,7 +306,7 @@ public class PlaceOrderFormController {
 
     public boolean saveOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) {
         /*Transaction*/
-        return placeOrderDAO.saveOrderDetails(orderId,orderDate,customerId,orderDetails);
+        return OrderDAO.saveOrderDetails(orderId,orderDate,customerId,orderDetails);
     }
 
 }
