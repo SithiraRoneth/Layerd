@@ -71,7 +71,7 @@ public class ManageItemsFormController {
     private void loadAllItems() {
         tblItems.getItems().clear();
         try {
-            ArrayList<ItemDTO>loadAllItem = itemDAO.loadAllItem();
+            ArrayList<ItemDTO>loadAllItem = itemDAO.getAll();
             for (ItemDTO i:loadAllItem) {
                 tblItems.getItems().add(new ItemTM(
                         i.getCode(),
@@ -136,7 +136,7 @@ public class ManageItemsFormController {
             if (!existItem(code)) {
                 new Alert(Alert.AlertType.ERROR, "There is no such item associated with the id " + code).show();
             }
-            boolean isDelete = itemDAO.itemDelete(code);
+            boolean isDelete = itemDAO.Delete(code);
             if (isDelete){
                 new Alert(Alert.AlertType.CONFIRMATION).show();
             }
@@ -179,7 +179,7 @@ public class ManageItemsFormController {
                 }
                 //Save Item
                 var dto = new ItemDTO(code, description, unitPrice, qtyOnHand);
-                boolean isSaved = itemDAO.itemSaved(dto);
+                boolean isSaved = itemDAO.Save(dto);
                 if (isSaved) {
                     tblItems.getItems().add(new ItemTM(code, description, unitPrice, qtyOnHand));
                 }
@@ -197,7 +197,7 @@ public class ManageItemsFormController {
                 }
                 /*Update Item*/
                 var dto = new ItemDTO(description,unitPrice,qtyOnHand,code);
-                boolean isUpdate = itemDAO.itemUpdate(dto);
+                boolean isUpdate = itemDAO.Update(dto);
 
             } catch (SQLException e) {
                 new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
@@ -216,14 +216,14 @@ public class ManageItemsFormController {
 
 
     private boolean existItem(String code) throws SQLException, ClassNotFoundException {
-        boolean isExit = itemDAO.isExist(code);
+        boolean isExit = itemDAO.exist(code);
         return isExit;
     }
 
 
     private String generateNewId() {
         try {
-           return itemDAO.generateId();
+           return itemDAO.generateNextId();
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         } catch (ClassNotFoundException e) {

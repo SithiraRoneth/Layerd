@@ -97,7 +97,7 @@ public class PlaceOrderFormController {
 
             if (newValue != null) {
                 try {
-                    CustomerDTO customerDTO = customerDAO.searchCustomer(newValue);
+                    CustomerDTO customerDTO = customerDAO.search(newValue);
                     try {
                         if (!existCustomer(newValue + "")) {
 //                            "There is no such customer associated with the id " + id
@@ -127,7 +127,7 @@ public class PlaceOrderFormController {
 
                 /*Find Item*/
                 try {
-                    ItemDTO item = itemDAO.searchItem(newItemCode);
+                    ItemDTO item = itemDAO.search(newItemCode);
                     if (!existItem(newItemCode + "")) {
 //                        throw new NotFoundException("There is no such item associated with the id " + code);
                     }
@@ -174,16 +174,16 @@ public class PlaceOrderFormController {
     }
 
     private boolean existItem(String code) throws SQLException, ClassNotFoundException {
-        return itemDAO.isExist(code);
+        return itemDAO.exist(code);
     }
 
     boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
-       return customerDAO.existCustomer(id);
+       return customerDAO.exist(id);
     }
 
     public String generateNewOrderId() {
         try {
-            return OrderDAO.nextId();
+            return OrderDAO.generateNextId();
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Failed to generate a new order id").show();
         } catch (ClassNotFoundException e) {
@@ -195,7 +195,7 @@ public class PlaceOrderFormController {
     private void loadAllCustomerIds() {
         try {
 
-            ArrayList<CustomerDTO> allCustomer = customerDAO.getAllCustomer();
+            ArrayList<CustomerDTO> allCustomer = customerDAO.getAll();
             for (CustomerDTO c : allCustomer) {
                     cmbCustomerId.getItems().add(c.getId());
             }
@@ -208,7 +208,7 @@ public class PlaceOrderFormController {
 
     private void loadAllItemCodes() {
         try {
-            ArrayList<ItemDTO>allItem = itemDAO.loadAllItem();
+            ArrayList<ItemDTO>allItem = itemDAO.getAll();
             for (ItemDTO i:allItem) {
                 cmbItemCode.getItems().add(i.getCode());
             }
@@ -316,7 +316,7 @@ public class PlaceOrderFormController {
             //Check order id already exist or not
 
 
-            boolean b1 = OrderDAO.isExists(orderId);
+            boolean b1 = OrderDAO.exist(orderId);
             /*if order id already exist*/
             if (b1) {
                 return false;
@@ -327,7 +327,7 @@ public class PlaceOrderFormController {
 
 
             //Save the Order to the order table
-            boolean b2 = OrderDAO.orderSaved(new OrderDTO(orderId, orderDate, customerId));
+            boolean b2 = OrderDAO.Save(new OrderDTO(orderId, orderDate, customerId));
 
 
             if (!b2) {
@@ -357,7 +357,7 @@ public class PlaceOrderFormController {
 
 
                 //update item
-                boolean b = itemDAO.itemUpdate(new ItemDTO(item.getCode(), item.getDescription(), item.getUnitPrice(), item.getQtyOnHand()));
+                boolean b = itemDAO.Update(new ItemDTO(item.getCode(), item.getDescription(), item.getUnitPrice(), item.getQtyOnHand()));
 
 
                 if (!b) {
@@ -382,7 +382,7 @@ public class PlaceOrderFormController {
     }
     public ItemDTO findItem(String code) {
         try {
-            return itemDAO.searchItem(code);
+            return itemDAO.search(code);
         } catch (SQLException e) {
             throw new RuntimeException("Failed to find the Item " + code, e);
         } catch (ClassNotFoundException e) {

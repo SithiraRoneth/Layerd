@@ -5,7 +5,6 @@
  * */
 package com.example.layeredarchitecture.DAO;
 
-import com.example.layeredarchitecture.db.DBConnection;
 import com.example.layeredarchitecture.model.ItemDTO;
 
 
@@ -14,7 +13,7 @@ import java.util.ArrayList;
 
 public class ItemDAOImpl implements ItemDAO{
     @Override
-    public ArrayList<ItemDTO> loadAllItem() throws SQLException, ClassNotFoundException {
+    public ArrayList<ItemDTO> getAll() throws SQLException, ClassNotFoundException {
         ResultSet rst = SQLUtil.execute("SELECT * FROM Item");
         ArrayList<ItemDTO>getAllItem = new ArrayList<>();
         while (rst.next()){
@@ -25,25 +24,30 @@ public class ItemDAOImpl implements ItemDAO{
         }
         return getAllItem;
     }
+
     @Override
-    public boolean itemDelete(String code) throws SQLException, ClassNotFoundException {
-        return SQLUtil.execute("DELETE FROM Item WHERE code=?",code);
-    }
-    @Override
-    public boolean itemSaved(ItemDTO dto) throws SQLException, ClassNotFoundException {
+    public boolean Save(ItemDTO dto) throws SQLException, ClassNotFoundException {
         return SQLUtil.execute("INSERT INTO Item VALUES(?,?,?,?)",dto.getCode(),dto.getDescription(),dto.getUnitPrice(),dto.getQtyOnHand());
     }
+
     @Override
-    public boolean itemUpdate(ItemDTO dto) throws SQLException, ClassNotFoundException {
+    public boolean Update(ItemDTO dto) throws SQLException, ClassNotFoundException {
         return SQLUtil.execute("UPDATE Item SET description=?, unitPrice=?, qtyOnHand=? WHERE code=?",dto.getDescription(),dto.getUnitPrice(),dto.getQtyOnHand(),dto.getCode());
+
     }
+
     @Override
-    public boolean isExist(String code) throws SQLException, ClassNotFoundException {
-        ResultSet resultSet= SQLUtil.execute("SELECT code FROM Item WHERE code=?",code);
+    public boolean exist(String id) throws SQLException, ClassNotFoundException {
+        ResultSet resultSet= SQLUtil.execute("SELECT code FROM Item WHERE code=?",id);
         return resultSet.next();
     }
     @Override
-    public String generateId() throws SQLException, ClassNotFoundException {
+    public boolean Delete(String id) throws SQLException, ClassNotFoundException {
+        return SQLUtil.execute("DELETE FROM Item WHERE code=?",id);
+    }
+
+    @Override
+    public String generateNextId() throws SQLException, ClassNotFoundException {
         ResultSet rst = SQLUtil.execute("SELECT code FROM Item ORDER BY code DESC LIMIT 1;");
 
         if (rst.next()) {
@@ -54,10 +58,11 @@ public class ItemDAOImpl implements ItemDAO{
             return "I00-001";
         }
     }
-    public ItemDTO searchItem(String newItemCode) throws SQLException, ClassNotFoundException {
-        ResultSet rst = SQLUtil.execute("SELECT * FROM Item WHERE code=?",newItemCode);
-        rst.next();
-        return new ItemDTO(newItemCode + "", rst.getString("description"), rst.getBigDecimal("unitPrice"),rst.getInt("qtyOnHand"));
-    }
 
+    @Override
+    public ItemDTO search(String newValue) throws SQLException, ClassNotFoundException {
+        ResultSet rst = SQLUtil.execute("SELECT * FROM Item WHERE code=?",newValue);
+        rst.next();
+        return new ItemDTO(newValue + "", rst.getString("description"), rst.getBigDecimal("unitPrice"),rst.getInt("qtyOnHand"));
+    }
 }
