@@ -31,23 +31,12 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
     @Override
     public boolean customerSave(CustomerDTO dto) throws SQLException, ClassNotFoundException {
-        Connection connection = DBConnection.getDbConnection().getConnection();
-        PreparedStatement pstm = connection.prepareStatement("INSERT INTO customer (id,name, address) VALUES (?,?,?)");
-        pstm.setString(1,dto.getId());
-        pstm.setString(2,dto.getName());
-        pstm.setString(3,dto.getAddress());
-
-        boolean isSaved = pstm.executeUpdate()>0;
-        return isSaved;
+        return SQLUtil.execute("INSERT INTO Customer VALUES(?,?,?)",dto.getId(),dto.getName(),dto.getAddress());
     }
     @Override
     public boolean customerUpdate(String name,String address,String id) throws SQLException, ClassNotFoundException {
-        Connection connection = DBConnection.getDbConnection().getConnection();
-        PreparedStatement pstm = connection.prepareStatement("UPDATE Customer SET name=?, address=? WHERE id=?");
-        pstm.setString(1, name);
-        pstm.setString(2, address);
-        pstm.setString(3, id);
-        return pstm.executeUpdate()>0;
+
+        return SQLUtil.execute("UPDATE Customer SET name=?, address=? WHERE id=?",name,address,id);
     }
     @Override
     public boolean existCustomer(String  id) throws SQLException, ClassNotFoundException {
@@ -58,10 +47,7 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
     @Override
     public boolean customerDelete(String id) throws SQLException, ClassNotFoundException {
-        Connection connection = DBConnection.getDbConnection().getConnection();
-        PreparedStatement pstm = connection.prepareStatement("DELETE FROM Customer WHERE id=?");
-        pstm.setString(1, id);
-        return pstm.executeUpdate()>0;
+        return SQLUtil.execute("DELETE FROM Customer WHERE id=?",id);
     }
     @Override
     public String generateNextId() throws SQLException, ClassNotFoundException {
@@ -76,13 +62,14 @@ public class CustomerDAOImpl implements CustomerDAO {
         }
     }
     public CustomerDTO searchCustomer(String newValue) throws SQLException, ClassNotFoundException {
-        Connection connection = DBConnection.getDbConnection().getConnection();
+       /* Connection connection = DBConnection.getDbConnection().getConnection();
         PreparedStatement pstm = connection.prepareStatement("SELECT * FROM Customer WHERE id=?");
         pstm.setString(1, newValue + "");
         ResultSet rst = pstm.executeQuery();
         rst.next();
         CustomerDTO customerDTO = new CustomerDTO(newValue + "", rst.getString("name"), rst.getString("address"));
 
-        return customerDTO;
+        return customerDTO;*/
+        return SQLUtil.execute("SELECT * FROM Customer WHERE id=?",newValue);
     }
 }
