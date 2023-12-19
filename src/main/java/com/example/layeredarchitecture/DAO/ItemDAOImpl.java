@@ -15,10 +15,7 @@ import java.util.ArrayList;
 public class ItemDAOImpl implements ItemDAO{
     @Override
     public ArrayList<ItemDTO> loadAllItem() throws SQLException, ClassNotFoundException {
-        Connection connection = DBConnection.getDbConnection().getConnection();
-        Statement stm = connection.createStatement();
-        ResultSet rst = stm.executeQuery("SELECT * FROM Item");
-
+        ResultSet rst = SQLUtil.execute("SELECT * FROM Item");
         ArrayList<ItemDTO>getAllItem = new ArrayList<>();
         while (rst.next()){
             ItemDTO itemDTO = new ItemDTO(
@@ -47,7 +44,7 @@ public class ItemDAOImpl implements ItemDAO{
     }
     @Override
     public String generateId() throws SQLException, ClassNotFoundException {
-        ResultSet rst = SQLUtil.execute("SELECT id FROM Customer ORDER BY id DESC LIMIT 1;");
+        ResultSet rst = SQLUtil.execute("SELECT code FROM Item ORDER BY code DESC LIMIT 1;");
 
         if (rst.next()) {
             String id = rst.getString("code");
@@ -58,7 +55,7 @@ public class ItemDAOImpl implements ItemDAO{
         }
     }
     public ItemDTO searchItem(String newItemCode) throws SQLException, ClassNotFoundException {
-        ResultSet rst = SQLUtil.execute("SELECT * FROM Item WHERE code=?");
+        ResultSet rst = SQLUtil.execute("SELECT * FROM Item WHERE code=?",newItemCode);
         rst.next();
         return new ItemDTO(newItemCode + "", rst.getString("description"), rst.getBigDecimal("unitPrice"),rst.getInt("qtyOnHand"));
     }
