@@ -42,15 +42,13 @@ public class ItemDAOImpl implements ItemDAO{
     }
     @Override
     public boolean isExist(String code) throws SQLException, ClassNotFoundException {
-        Connection connection = DBConnection.getDbConnection().getConnection();
-        PreparedStatement pstm = connection.prepareStatement("SELECT id FROM Item WHERE code=?");
-        pstm.setString(1, code);
-        return pstm.executeQuery().next();
+        ResultSet resultSet= SQLUtil.execute("SELECT code FROM Item WHERE code=?",code);
+        return resultSet.next();
     }
     @Override
     public String generateId() throws SQLException, ClassNotFoundException {
-        Connection connection = DBConnection.getDbConnection().getConnection();
-        ResultSet rst = connection.createStatement().executeQuery("SELECT code FROM Item ORDER BY code DESC LIMIT 1;");
+        ResultSet rst = SQLUtil.execute("SELECT id FROM Customer ORDER BY id DESC LIMIT 1;");
+
         if (rst.next()) {
             String id = rst.getString("code");
             int newItemId = Integer.parseInt(id.replace("I00-", "")) + 1;
@@ -60,7 +58,9 @@ public class ItemDAOImpl implements ItemDAO{
         }
     }
     public ItemDTO searchItem(String newItemCode) throws SQLException, ClassNotFoundException {
-        return SQLUtil.execute("SELECT * FROM Item WHERE code = ? ", newItemCode);
+        ResultSet rst = SQLUtil.execute("SELECT * FROM Item WHERE code=?");
+        rst.next();
+        return new ItemDTO(newItemCode + "", rst.getString("description"), rst.getBigDecimal("unitPrice"),rst.getInt("qtyOnHand"));
     }
 
 }
