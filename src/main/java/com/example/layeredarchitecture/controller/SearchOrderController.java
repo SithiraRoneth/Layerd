@@ -13,6 +13,7 @@ import com.example.layeredarchitecture.view.tdm.SummaryTM;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -49,6 +50,8 @@ public class SearchOrderController {
     @FXML
     private TableColumn<?, ?> colprice;
 
+    @FXML
+    private Label lblId;
     QueryDAO queryDAO = new QueryDAOImpl();
 
     public void initialize(){

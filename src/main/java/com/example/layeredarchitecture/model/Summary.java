@@ -17,7 +17,7 @@ public class Summary {
     private int qty;
     private BigDecimal unitPrice;
 
-    public Summary() {
+    public Summary(){
     }
 
     public Summary(String oid, LocalDate date, String customerID, String itemCode, String desc, int qty, BigDecimal unitPrice) {
