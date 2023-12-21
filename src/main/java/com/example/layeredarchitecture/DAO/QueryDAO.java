@@ -1,7 +1,9 @@
 package com.example.layeredarchitecture.DAO;
 
+import com.example.layeredarchitecture.model.Summary;
+
 import java.sql.SQLException;
 
 public interface QueryDAO {
-    boolean customerItemDetails() throws SQLException, ClassNotFoundException;
+    Summary customerItemDetails() throws SQLException, ClassNotFoundException;
 }
