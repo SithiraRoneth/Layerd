@@ -54,9 +54,9 @@ public class SearchOrderController {
         colQty.setCellValueFactory(new PropertyValueFactory<>("qty"));
         colprice.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
     }
+
     public void btnPrintOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         Summary summary = queryDAO.customerItemDetails();
-        System.out.println(summary);
          tblSummary.getItems().add(new SummaryTM(
                  summary.getOid(),
                  summary.getDate(),
@@ -66,5 +66,6 @@ public class SearchOrderController {
                  summary.getQty(),
                  summary.getUnitPrice()));
          tblSummary.refresh();
+         tblSummary.getSelectionModel().getSelectedItem();
     }
 }

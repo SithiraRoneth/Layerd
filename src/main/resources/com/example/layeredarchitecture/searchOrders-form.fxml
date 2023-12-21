@@ -3,12 +3,19 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="612.0" prefWidth="654.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.layeredarchitecture.controller.SearchOrderController">
+<AnchorPane prefHeight="612.0" prefWidth="654.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.layeredarchitecture.controller.SearchOrderController">
    <children>
+      <ImageView fitHeight="226.0" fitWidth="550.0" layoutX="27.0" pickOnBounds="true">
+         <image>
+            <Image url="@assests/summary.png" />
+         </image>
+      </ImageView>
       <JFXButton layoutX="586.0" layoutY="31.0" onAction="#btnPrintOnAction" style="-fx-background-color: red;" text="Print" textFill="#fcfcfc" />
-      <TableView fx:id="tblSummary" layoutX="72.0" layoutY="177.0" prefHeight="200.0" prefWidth="527.0">
+      <TableView fx:id="tblSummary" layoutX="72.0" layoutY="177.0" prefHeight="329.0" prefWidth="527.0" AnchorPane.leftAnchor="72.0">
         <columns>
           <TableColumn fx:id="colOID" prefWidth="75.0" text="Order  ID" />
           <TableColumn fx:id="colDate" prefWidth="75.0" text="Date" />
