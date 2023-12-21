@@ -3,8 +3,10 @@
  * Time :09:34
  * Project Name :working
  * */
-package com.example.layeredarchitecture.DAO;
+package com.example.layeredarchitecture.DAO.Impl;
 
+import com.example.layeredarchitecture.DAO.CustomerDAO;
+import com.example.layeredarchitecture.DAO.SQLUtil;
 import com.example.layeredarchitecture.model.CustomerDTO;
 import com.example.layeredarchitecture.model.ItemDTO;
 

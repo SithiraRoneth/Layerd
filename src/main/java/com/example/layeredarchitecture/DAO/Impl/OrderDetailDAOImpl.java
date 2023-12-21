@@ -3,8 +3,10 @@
  * Time :21:13
  * Project Name :working
  * */
-package com.example.layeredarchitecture.DAO;
+package com.example.layeredarchitecture.DAO.Impl;
 
+import com.example.layeredarchitecture.DAO.OrderDetailDAO;
+import com.example.layeredarchitecture.DAO.SQLUtil;
 import com.example.layeredarchitecture.model.OrderDetailDTO;
 import java.sql.SQLException;
 

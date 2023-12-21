@@ -3,15 +3,17 @@
  * Time :12:33
  * Project Name :working
  * */
-package com.example.layeredarchitecture.DAO;
+package com.example.layeredarchitecture.DAO.Impl;
 
+import com.example.layeredarchitecture.DAO.ItemDAO;
+import com.example.layeredarchitecture.DAO.SQLUtil;
 import com.example.layeredarchitecture.model.ItemDTO;
 
 
 import java.sql.*;
 import java.util.ArrayList;
 
-public class ItemDAOImpl implements ItemDAO{
+public class ItemDAOImpl implements ItemDAO {
     @Override
     public ArrayList<ItemDTO> getAll() throws SQLException, ClassNotFoundException {
         ResultSet rst = SQLUtil.execute("SELECT * FROM Item");
