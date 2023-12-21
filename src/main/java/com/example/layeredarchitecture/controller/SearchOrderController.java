@@ -12,16 +12,22 @@ import com.example.layeredarchitecture.model.Summary;
 import com.example.layeredarchitecture.view.tdm.SummaryTM;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class SearchOrderController {
-    public TableView<SummaryTM> tblSummary;
+    @FXML
+    private TableView<SummaryTM> tblSummary;
+    @FXML
+    private AnchorPane root;
     @FXML
     private TableColumn<?, ?> ColCode;
 
@@ -67,5 +73,10 @@ public class SearchOrderController {
                  summary.getUnitPrice()));
          tblSummary.refresh();
          tblSummary.getSelectionModel().getSelectedItem();
+    }
+    @FXML
+    void backOnAction(ActionEvent event) throws IOException {
+        root.getChildren().clear();
+        root.getChildren().add(FXMLLoader.load(getClass().getResource("/com/example/layeredarchitecture/main-form.fxml")));
     }
 }
