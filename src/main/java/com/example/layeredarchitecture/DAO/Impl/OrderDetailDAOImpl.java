@@ -13,7 +13,6 @@ import java.sql.SQLException;
 public class OrderDetailDAOImpl implements OrderDetailDAO {
     @Override
     public boolean SavedOrderDetails(OrderDetailDTO dto) throws SQLException, ClassNotFoundException {
-
         return SQLUtil.execute("INSERT INTO OrderDetails VALUES(?,?,?,?)",dto.getOid(),dto.getItemCode(),dto.getUnitPrice(),dto.getQty());
     }
 

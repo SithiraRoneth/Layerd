@@ -1,5 +1,7 @@
 package com.example.layeredarchitecture.controller;
 
+import com.example.layeredarchitecture.BO.ItemBO;
+import com.example.layeredarchitecture.BO.ItemBOImpl;
 import com.example.layeredarchitecture.DAO.ItemDAO;
 import com.example.layeredarchitecture.DAO.Impl.ItemDAOImpl;
 import com.example.layeredarchitecture.model.ItemDTO;
@@ -36,7 +38,7 @@ public class ManageItemsFormController {
     public TableView<ItemTM> tblItems;
     public TextField txtUnitPrice;
     public JFXButton btnAddNewItem;
-    ItemDAO itemDAO = new ItemDAOImpl();
+    ItemBO itemBO = new ItemBOImpl();
 
     public void initialize() {
         tblItems.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("code"));
@@ -71,7 +73,7 @@ public class ManageItemsFormController {
     private void loadAllItems() {
         tblItems.getItems().clear();
         try {
-            ArrayList<ItemDTO>loadAllItem = itemDAO.getAll();
+            ArrayList<ItemDTO>loadAllItem = itemBO.getAllItem();
             for (ItemDTO i:loadAllItem) {
                 tblItems.getItems().add(new ItemTM(
                         i.getCode(),
@@ -136,7 +138,7 @@ public class ManageItemsFormController {
             if (!existItem(code)) {
                 new Alert(Alert.AlertType.ERROR, "There is no such item associated with the id " + code).show();
             }
-            boolean isDelete = itemDAO.Delete(code);
+            boolean isDelete = itemBO.DeleteItem(code);
             if (isDelete){
                 new Alert(Alert.AlertType.CONFIRMATION).show();
             }
@@ -179,7 +181,7 @@ public class ManageItemsFormController {
                 }
                 //Save Item
                 var dto = new ItemDTO(code, description, unitPrice, qtyOnHand);
-                boolean isSaved = itemDAO.Save(dto);
+                boolean isSaved = itemBO.SaveItem(dto);
                 if (isSaved) {
                     tblItems.getItems().add(new ItemTM(code, description, unitPrice, qtyOnHand));
                 }
@@ -197,7 +199,7 @@ public class ManageItemsFormController {
                 }
                 /*Update Item*/
                 var dto = new ItemDTO(description,unitPrice,qtyOnHand,code);
-                boolean isUpdate = itemDAO.Update(dto);
+                boolean isUpdate = itemBO.updateItem(dto);
 
             } catch (SQLException e) {
                 new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
@@ -216,14 +218,13 @@ public class ManageItemsFormController {
 
 
     private boolean existItem(String code) throws SQLException, ClassNotFoundException {
-        boolean isExit = itemDAO.exist(code);
-        return isExit;
+        return itemBO.existItem(code);
     }
 
 
     private String generateNewId() {
         try {
-           return itemDAO.generateNextId();
+           return itemBO.generateNextItemId();
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         } catch (ClassNotFoundException e) {
