@@ -3,8 +3,10 @@
  * Time :10:35
  * Project Name :working
  * */
-package com.example.layeredarchitecture.BO;
+package com.example.layeredarchitecture.BO.BOImpl;
 
+import com.example.layeredarchitecture.BO.ItemBO;
+import com.example.layeredarchitecture.DAO.DAOFactory;
 import com.example.layeredarchitecture.DAO.Impl.ItemDAOImpl;
 import com.example.layeredarchitecture.DAO.ItemDAO;
 import com.example.layeredarchitecture.model.ItemDTO;
@@ -12,8 +14,8 @@ import com.example.layeredarchitecture.model.ItemDTO;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class ItemBOImpl implements ItemBO{
-    ItemDAO itemDAO = new ItemDAOImpl();
+public class ItemBOImpl implements ItemBO {
+    ItemDAO itemDAO = (ItemDAO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.ITEM);
 
     @Override
     public ArrayList<ItemDTO> getAllItem() throws SQLException, ClassNotFoundException {

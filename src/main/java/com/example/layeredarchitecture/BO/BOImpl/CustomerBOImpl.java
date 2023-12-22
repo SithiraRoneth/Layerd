@@ -3,17 +3,18 @@
  * Time :10:24
  * Project Name :working
  * */
-package com.example.layeredarchitecture.BO;
+package com.example.layeredarchitecture.BO.BOImpl;
 
+import com.example.layeredarchitecture.BO.CustomerBO;
 import com.example.layeredarchitecture.DAO.CustomerDAO;
-import com.example.layeredarchitecture.DAO.Impl.CustomerDAOImpl;
+import com.example.layeredarchitecture.DAO.DAOFactory;
 import com.example.layeredarchitecture.model.CustomerDTO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class CustomerBOImpl implements CustomerBO{
-    CustomerDAO customerDAO = new CustomerDAOImpl();
+public class CustomerBOImpl implements CustomerBO {
+    CustomerDAO customerDAO = (CustomerDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.CUSTOMER);
     @Override
     public ArrayList<CustomerDTO> getAllCustomer() throws SQLException, ClassNotFoundException {
         return customerDAO.getAll();

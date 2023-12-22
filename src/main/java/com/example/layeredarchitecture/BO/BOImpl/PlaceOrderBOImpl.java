@@ -3,16 +3,10 @@
  * Time :09:15
  * Project Name :working
  * */
-package com.example.layeredarchitecture.BO;
+package com.example.layeredarchitecture.BO.BOImpl;
 
-import com.example.layeredarchitecture.DAO.CustomerDAO;
-import com.example.layeredarchitecture.DAO.Impl.CustomerDAOImpl;
-import com.example.layeredarchitecture.DAO.Impl.ItemDAOImpl;
-import com.example.layeredarchitecture.DAO.Impl.OrderDAOImpl;
-import com.example.layeredarchitecture.DAO.Impl.OrderDetailDAOImpl;
-import com.example.layeredarchitecture.DAO.ItemDAO;
-import com.example.layeredarchitecture.DAO.OrderDAO;
-import com.example.layeredarchitecture.DAO.OrderDetailDAO;
+import com.example.layeredarchitecture.BO.PlaceOrderBO;
+import com.example.layeredarchitecture.DAO.*;
 import com.example.layeredarchitecture.db.DBConnection;
 import com.example.layeredarchitecture.model.CustomerDTO;
 import com.example.layeredarchitecture.model.ItemDTO;
@@ -24,12 +18,11 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
-public class PlaceOrderBOImpl implements PlaceOrderBO{
-    OrderDAO orderDAO = new OrderDAOImpl();
-    CustomerDAO customerDAO = new CustomerDAOImpl();
-    OrderDetailDAO orderDetailDAO = new OrderDetailDAOImpl();
-    ItemDAO itemDAO = new ItemDAOImpl();
+public class PlaceOrderBOImpl implements PlaceOrderBO {
+    OrderDAO orderDAO = (OrderDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.ORDERS);
+    CustomerDAO customerDAO = (CustomerDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.CUSTOMER);
+    OrderDetailDAO orderDetailDAO = (OrderDetailDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.ORDER_DETAIL);
+    ItemDAO itemDAO = (ItemDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.ITEM);
     @Override
     public boolean placeOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) throws SQLException, ClassNotFoundException {
 
@@ -38,7 +31,6 @@ public class PlaceOrderBOImpl implements PlaceOrderBO{
             connection= DBConnection.getDbConnection().getConnection();
 
             boolean b1 = orderDAO.exist(orderId);
-            /*if order id already exist*/
             if (b1) {
                 return false;
             }
@@ -54,7 +46,7 @@ public class PlaceOrderBOImpl implements PlaceOrderBO{
             }
 
             for (OrderDetailDTO detail : orderDetails) {
-                boolean b3 = orderDetailDAO.SavedOrderDetails(detail);
+                boolean b3 = orderDetailDAO.Save(detail);
                 if (!b3) {
                     connection.rollback();
                     connection.setAutoCommit(true);
