@@ -8,7 +8,7 @@ package com.example.layeredarchitecture.model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class Summary {
+public class SummaryDto {
     private String oid;
     private LocalDate date;
     private String customerID;
@@ -17,10 +17,10 @@ public class Summary {
     private int qty;
     private BigDecimal unitPrice;
 
-    public Summary(){
+    public SummaryDto(){
     }
 
-    public Summary(String oid, LocalDate date, String customerID, String itemCode, String desc, int qty, BigDecimal unitPrice) {
+    public SummaryDto(String oid, LocalDate date, String customerID, String itemCode, String desc, int qty, BigDecimal unitPrice) {
         this.oid = oid;
         this.date = date;
         this.customerID = customerID;

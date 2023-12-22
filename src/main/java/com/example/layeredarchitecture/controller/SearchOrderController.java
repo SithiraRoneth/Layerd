@@ -7,8 +7,7 @@ package com.example.layeredarchitecture.controller;
 
 import com.example.layeredarchitecture.DAO.Impl.QueryDAOImpl;
 import com.example.layeredarchitecture.DAO.QueryDAO;
-import com.example.layeredarchitecture.DAO.SQLUtil;
-import com.example.layeredarchitecture.model.Summary;
+import com.example.layeredarchitecture.model.SummaryDto;
 import com.example.layeredarchitecture.view.tdm.SummaryTM;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,15 +19,15 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class SearchOrderController {
     @FXML
     private TableView<SummaryTM> tblSummary;
+
     @FXML
     private AnchorPane root;
+
     @FXML
     private TableColumn<?, ?> ColCode;
 
@@ -65,7 +64,7 @@ public class SearchOrderController {
     }
 
     public void btnPrintOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-        Summary summary = queryDAO.customerItemDetails();
+        SummaryDto summary = queryDAO.customerItemDetails();
          tblSummary.getItems().add(new SummaryTM(
                  summary.getOid(),
                  summary.getDate(),
